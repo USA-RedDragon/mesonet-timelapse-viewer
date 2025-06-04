@@ -1,11 +1,19 @@
 <template>
   <div class="mesonet-image">
-    <img :src="images.at(-1)" alt="Mesonet Image" />
+    <img :src="images.at(imageIndex-1)" alt="Mesonet Image" />
+    <Slider
+        v-model="imageIndex"
+        :max="images.length"
+        :min="1"
+        :step="1"
+        class="mt-4" />
   </div>
 </template>
 
 <script lang="ts">
 import axios from 'axios';
+
+import { Slider } from '@/components/ui/slider'
 
 export default {
   props: {
@@ -14,10 +22,13 @@ export default {
       required: true,
     },
   },
-  components: {},
+  components: {
+    Slider,
+  },
   data: function() {
     return {
       images: [] as string[],
+      imageIndex: 1,
     };
   },
   mounted() {
@@ -27,7 +38,7 @@ export default {
       .then(response => {
         for (const filename of response.data.split('\n')) {
           if (filename.trim()) {
-            this.images.push(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
+            this.images.unshift(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
           }
         }
       })

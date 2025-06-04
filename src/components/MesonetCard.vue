@@ -31,7 +31,7 @@ export default {
     CardContent,
     CardHeader,
     CardTitle,
-    MesonetImage
+    MesonetImage,
   },
   data: function() {
     return {
