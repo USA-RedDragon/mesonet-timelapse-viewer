@@ -50,11 +50,13 @@ export default {
       // in the S3 bucket
       axios.get(`https://s3.mcswain.dev/mesonet-${this.kind}/list.txt`)
         .then(response => {
+          const newImages: string[] = [];
           for (const filename of response.data.split('\n')) {
             if (filename.trim()) {
-              this.images.unshift(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
+              newImages.unshift(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
             }
           }
+          this.images = newImages;
         })
         .catch(error => {
           console.error('Error fetching data:', error);
