@@ -1,6 +1,6 @@
 <template>
   <div class="mesonet-image">
-    <img :src="images.at(imageIndex-1)" alt="Mesonet Image" />
+    <img :src="images[imageIndex[0]-1]" alt="Mesonet Image" />
     <Slider
         v-model="imageIndex"
         :max="images.length"
@@ -28,7 +28,7 @@ export default {
   data: function() {
     return {
       images: [] as string[],
-      imageIndex: 1,
+      imageIndex: [1],
     };
   },
   mounted() {
