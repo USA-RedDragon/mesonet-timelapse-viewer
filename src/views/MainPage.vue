@@ -1,32 +1,23 @@
 <template>
   <div>
     <div class="info">
-      <Card>
-        <CardHeader>
-          <CardTitle>I am here!</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <h3 style="font-weight: bold;">Inside the body</h3>
-        </CardContent>
-      </Card>
+      <MesonetCard kind="dewd" />
+      <MesonetCard kind="qdiv" />
+      <MesonetCard kind="relh" />
+      <MesonetCard kind="ta9m" />
+      <MesonetCard kind="tair" />
+      <MesonetCard kind="tdew" />
+      <MesonetCard kind="thte" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import MesonetCard from '@/components/MesonetCard.vue';
 
 export default {
   components: {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
+    MesonetCard,
   },
   created() {},
   mounted() {},
@@ -56,23 +47,23 @@ export default {
 
 @media (max-width: 2100px) {
   .info {
-    -moz-column-count: 4;
-    -webkit-column-count: 4;
-    column-count: 4;
-  }
-}
-@media (max-width: 1200px) {
-  .info {
     -moz-column-count: 3;
     -webkit-column-count: 3;
     column-count: 3;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
   .info {
     -moz-column-count: 2;
     -webkit-column-count: 2;
     column-count: 2;
+  }
+}
+@media (max-width: 600px) {
+  .info {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
   }
 }
 </style>
