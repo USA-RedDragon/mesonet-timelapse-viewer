@@ -29,27 +29,41 @@ export default {
     return {
       images: [] as string[],
       imageIndex: [1],
+      refreshTimer: null as ReturnType<typeof setInterval> | null,
     };
   },
   mounted() {
-    // The list.txt is a newline (\n) separated list of filenames available
-    // in the S3 bucket
-    axios.get(`https://s3.mcswain.dev/mesonet-${this.kind}/list.txt`)
-      .then(response => {
-        for (const filename of response.data.split('\n')) {
-          if (filename.trim()) {
-            this.images.unshift(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
-          }
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      })
-      .finally(() => {
-        console.log(`${this.kind} Images loaded:`, this.images);
-      });
+    // Refresh every 5 minutes
+    this.fetchData();
+    this.refreshTimer = setInterval(() => {
+      this.fetchData();
+    }, 5 * 60 * 1000);
   },
-  methods: {},
+  unmounted() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+    }
+  },
+  methods: {
+    fetchData() {
+      // The list.txt is a newline (\n) separated list of filenames available
+      // in the S3 bucket
+      axios.get(`https://s3.mcswain.dev/mesonet-${this.kind}/list.txt`)
+        .then(response => {
+          for (const filename of response.data.split('\n')) {
+            if (filename.trim()) {
+              this.images.unshift(`https://s3.mcswain.dev/mesonet-${this.kind}/${filename}`);
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        })
+        .finally(() => {
+          console.log(`${this.kind} Images loaded:`, this.images);
+        });
+    },
+  },
   computed: {},
 };
 </script>

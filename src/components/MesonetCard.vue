@@ -34,21 +34,10 @@ export default {
     MesonetImage,
   },
   data: function() {
-    return {
-      refreshTimer: null as ReturnType<typeof setInterval> | null,
-    };
+    return {};
   },
-  mounted() {
-    // Refresh every 5 minutes
-    this.refreshTimer = setInterval(() => {
-      this.$forceUpdate();
-    }, 5 * 60 * 1000);
-  },
-  unmounted() {
-    if (this.refreshTimer) {
-      clearInterval(this.refreshTimer);
-    }
-  },
+  mounted() {},
+  unmounted() {},
   methods: {},
   computed: {
     kindTitle() {
